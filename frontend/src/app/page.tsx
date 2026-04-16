@@ -28,7 +28,7 @@ interface Product {
     lastPriceChange?: string;
 }
 
-export const mapFirestoreDataToProduct = (id: string, data: any): Product => {
+const mapFirestoreDataToProduct = (id: string, data: any): Product => {
     const stockAmount = Number(data['Stok Miktarı']) || 0;
     return {
         id,
@@ -74,7 +74,7 @@ const truncate = (text: string | undefined, maxLength: number) => {
     return `${text.slice(0, maxLength)}…`;
 };
 
-export const getPaginationRange = (currentPage: number, totalPages: number) => {
+const getPaginationRange = (currentPage: number, totalPages: number) => {
     const delta = 2;
     const range: number[] = [];
 
