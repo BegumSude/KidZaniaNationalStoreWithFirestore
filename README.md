@@ -10,7 +10,7 @@ Bu proje, staj yaptığım KidZania İstanbul bünyesindeki National Store'un op
 
 🛡️ Senior Architecture: Nest.js (Backend) ve Next.js (Frontend) ile tip güvenliği (TypeScript) ve DTO tabanlı veri doğrulama.
 
-🎨 Modern UI: Marka kimliğine uygun #AB0033 (Kırmızı) ve #F18B22 (Turuncu) renk paletiyle minimalist tasarım.
+🎨 Modern UI: Marka kimliğine uygun #AB0033 ve #F18B22 renk paletiyle minimalist tasarım.
 
 ## 🛠️ Teknoloji 
 Katman	Teknolojiler
@@ -18,7 +18,8 @@ Frontend	Next.js 14+, React, Tailwind CSS, Lucide Icons, Axios
 Backend	Nest.js, TypeScript, Firebase Admin SDK, class-validator
 Veritabanı	Google Firestore, Microsoft SQL Server (Tiger)
 Pipeline	Python, Pandas, pyodbc
-📈 Veri Akış Mimarisi (Data Pipeline)
+
+## 📈 Veri Akış Mimarisi (Data Pipeline)
 Projenin en kritik özelliği, fiziksel mağaza verilerini buluta taşıyan akıllı boru hattıdır:
 
 Extract: Python scripti yerel ağdaki SQL Server'a bağlanır.
