@@ -31,6 +31,45 @@ const formatDate = (dateString?: string) => {
     }
 };
 
+const ScrollableImage = ({ src, alt, className }: { src: string, alt: string, className: string }) => {
+    const [isScrollable, setIsScrollable] = useState(false);
+    const [isScrolledToBottom, setIsScrolledToBottom] = useState(false);
+    const containerRef = React.useRef<HTMLDivElement>(null);
+
+    const checkScroll = () => {
+        if (containerRef.current) {
+            const { scrollHeight, clientHeight, scrollTop } = containerRef.current;
+            setIsScrollable(scrollHeight > clientHeight + 5);
+            setIsScrolledToBottom(scrollHeight - scrollTop <= clientHeight + 10);
+        }
+    };
+
+    return (
+        <div className="relative w-full h-full group">
+            <div 
+                ref={containerRef}
+                onScroll={checkScroll}
+                className="w-full h-full overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            >
+                <img
+                    src={src}
+                    alt={alt}
+                    className={className}
+                    onLoad={checkScroll}
+                />
+            </div>
+            
+            {isScrollable && !isScrolledToBottom && (
+                <div className="absolute bottom-3 right-3 p-1.5 bg-black/40 backdrop-blur-sm rounded-full text-white pointer-events-none animate-bounce shadow-md transition-opacity duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                    </svg>
+                </div>
+            )}
+        </div>
+    );
+};
+
 export default function ProductDynamicPage() {
     const params = useParams();
     const router = useRouter();
@@ -143,22 +182,21 @@ export default function ProductDynamicPage() {
 
             <main className="w-full max-w-xl flex-1 px-4 sm:px-6 pb-20 pt-6 flex flex-col">
                 {/* Product Image */}
-                <div className="relative w-full aspect-square rounded-2xl overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] bg-gray-50 border border-gray-100 shadow-card flex items-start justify-center group">
+                <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-card flex items-start justify-center">
                     {product.imageUrl ? (
-                        <img
-                            src={product.imageUrl}
-                            alt={product.name}
-                            className="w-full h-auto min-h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        <ScrollableImage 
+                            src={product.imageUrl} 
+                            alt={product.name} 
+                            className="w-full h-auto min-h-full object-cover transition-transform duration-700 hover:scale-105 origin-top" 
                         />
                     ) : (
-                        <div className="flex flex-col items-center text-gray-300">
+                        <div className="flex flex-col items-center justify-center w-full h-full text-gray-300">
                             <svg className="w-16 h-16 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             <span className="text-xs uppercase tracking-widest font-bold text-gray-300">Görsel Yok</span>
                         </div>
                     )}
-
                 </div>
 
                 {/* Details Card */}

@@ -7,6 +7,46 @@ import { useAuth } from '@/context/AuthContext';
 import kidzaniaLogo from '../../../images/KidZaniaLogo.png';
 import { auth, db } from '@/lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import React from 'react';
+
+const ScrollableImage = ({ src, alt, className }: { src: string, alt: string, className: string }) => {
+    const [isScrollable, setIsScrollable] = useState(false);
+    const [isScrolledToBottom, setIsScrolledToBottom] = useState(false);
+    const containerRef = React.useRef<HTMLDivElement>(null);
+
+    const checkScroll = () => {
+        if (containerRef.current) {
+            const { scrollHeight, clientHeight, scrollTop } = containerRef.current;
+            setIsScrollable(scrollHeight > clientHeight + 5);
+            setIsScrolledToBottom(scrollHeight - scrollTop <= clientHeight + 10);
+        }
+    };
+
+    return (
+        <div className="relative w-full h-full group">
+            <div 
+                ref={containerRef}
+                onScroll={checkScroll}
+                className="w-full h-full overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            >
+                <img
+                    src={src}
+                    alt={alt}
+                    className={className}
+                    onLoad={checkScroll}
+                />
+            </div>
+            
+            {isScrollable && !isScrolledToBottom && (
+                <div className="absolute bottom-2 right-2 p-1.5 bg-black/40 backdrop-blur-sm rounded-full text-white pointer-events-none animate-bounce shadow-md transition-opacity duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                    </svg>
+                </div>
+            )}
+        </div>
+    );
+};
 
 interface Product {
     id: string;
@@ -305,15 +345,15 @@ export default function CatalogPage() {
                                         className="group flex flex-col overflow-hidden rounded-xl bg-white border border-gray-100 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer"
                                         onClick={() => setSelectedProduct(product)}
                                     >
-                                        <div className="relative h-44 w-full overflow-y-auto overflow-x-hidden bg-gray-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                                        <div className="relative h-44 w-full overflow-hidden bg-gray-50">
                                             {product.imageUrl ? (
-                                                <img
-                                                    src={product.imageUrl}
-                                                    alt={product.name}
-                                                    className="w-full h-auto min-h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                                                <ScrollableImage 
+                                                    src={product.imageUrl} 
+                                                    alt={product.name} 
+                                                    className="w-full h-auto min-h-full object-cover transition-transform duration-500 group-hover:scale-[1.04] origin-top" 
                                                 />
                                             ) : (
-                                                <div className="flex h-44 w-full items-center justify-center bg-gray-50">
+                                                <div className="flex h-full w-full items-center justify-center bg-gray-50">
                                                     <span className="text-xs font-semibold uppercase tracking-widest text-gray-300">Görsel Yok</span>
                                                 </div>
                                             )}
@@ -424,8 +464,8 @@ export default function CatalogPage() {
                         </button>
 
                         {selectedProduct.imageUrl && (
-                            <div className="relative h-64 w-full overflow-y-auto overflow-x-hidden rounded-t-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                                <img src={selectedProduct.imageUrl} alt={selectedProduct.name} className="w-full h-auto min-h-full object-cover" />
+                            <div className="relative h-64 w-full overflow-hidden rounded-t-2xl">
+                                <ScrollableImage src={selectedProduct.imageUrl} alt={selectedProduct.name} className="w-full h-auto min-h-full object-cover origin-top" />
                             </div>
                         )}
 
