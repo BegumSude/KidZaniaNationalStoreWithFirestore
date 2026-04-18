@@ -73,3 +73,27 @@ Boyut: 3x3 cm
 Format: Yüksek çözünürlüklü SVG QR Kod.
 
 URL Yapısı: https://domain.app/product/[barkod]
+
+<img width="1440" height="782" alt="Ekran Resmi 2026-04-13 18 57 50" src="https://github.com/user-attachments/assets/3df0b1ef-7c2f-40ff-bbcf-ce2a96b70711" />
+
+<img width="1437" height="779" alt="Ekran Resmi 2026-04-13 18 55 27" src="https://github.com/user-attachments/assets/f7559bed-e4bc-446a-8012-9916538ef661" />
+
+<img width="1440" height="782" alt="Ekran Resmi 2026-04-13 19 00 50" src="https://github.com/user-attachments/assets/f45830c7-1215-4802-b963-b38735dcbb5a" />
+
+<img width="1438" height="778" alt="Ekran Resmi 2026-04-13 19 01 28" src="https://github.com/user-attachments/assets/4b064dfc-d4e5-454b-9c1f-b6bc2378eee3" />
+
+<img width="1440" height="780" alt="Ekran Resmi 2026-04-13 19 02 04" src="https://github.com/user-attachments/assets/d37ef43b-4171-42da-ad8d-e5cc58292cbb" />
+
+<img width="1440" height="775" alt="Ekran Resmi 2026-04-13 19 02 30" src="https://github.com/user-attachments/assets/9bae6007-0c0e-44de-be0b-da9123579c5f" />
+
+<img width="2880" height="1554" alt="c52a38f4-cd1c-46f2-9c68-745c9b9b3fc1" src="https://github.com/user-attachments/assets/5d96b158-e036-43f7-9587-dd9403994a17" />
+
+
+## Mobil Görünüm (QR Code tarandıktan sonra)
+
+<img width="1179" height="1984" alt="IMG_6992" src="https://github.com/user-attachments/assets/9146496a-5572-4f3b-ab56-10e71ef86d3c" />
+<img width="1179" height="1964" alt="IMG_6993" src="https://github.com/user-attachments/assets/18dc0947-bc61-41f0-ae58-cc6143551114" />
+
+
+
+
