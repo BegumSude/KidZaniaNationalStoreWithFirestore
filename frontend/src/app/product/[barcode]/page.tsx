@@ -143,12 +143,12 @@ export default function ProductDynamicPage() {
 
             <main className="w-full max-w-xl flex-1 px-4 sm:px-6 pb-20 pt-6 flex flex-col">
                 {/* Product Image */}
-                <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-card flex items-center justify-center group">
+                <div className="relative w-full aspect-square rounded-2xl overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] bg-gray-50 border border-gray-100 shadow-card flex items-start justify-center group">
                     {product.imageUrl ? (
                         <img
                             src={product.imageUrl}
                             alt={product.name}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            className="w-full h-auto min-h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                     ) : (
                         <div className="flex flex-col items-center text-gray-300">

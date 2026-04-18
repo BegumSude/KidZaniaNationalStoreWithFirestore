@@ -16,8 +16,13 @@ print("The transfer is starting...")
 for index, row in df.iterrows():
 
     veri = row.dropna().to_dict()
+    code = str(veri.get('Malzeme Kodu')).strip()
     
-    db.collection(collection_name).add(veri)
+    if code and code != 'nan':
+        # Yeni veriyi 'Malzeme Kodu' id'si ile günceller (veri zaten varsa üzerine yazar/birleştirir)
+        db.collection(collection_name).document(code).set(veri, merge=True)
+    else:
+        db.collection(collection_name).add(veri)
     
     if (index + 1) % 10 == 0:
         print(f" {index + 1} rows are sent...")

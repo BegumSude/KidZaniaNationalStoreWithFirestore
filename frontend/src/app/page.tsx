@@ -305,12 +305,12 @@ export default function CatalogPage() {
                                         className="group flex flex-col overflow-hidden rounded-xl bg-white border border-gray-100 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 cursor-pointer"
                                         onClick={() => setSelectedProduct(product)}
                                     >
-                                        <div className="relative overflow-hidden bg-gray-50">
+                                        <div className="relative h-44 w-full overflow-y-auto overflow-x-hidden bg-gray-50 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                                             {product.imageUrl ? (
                                                 <img
                                                     src={product.imageUrl}
                                                     alt={product.name}
-                                                    className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                                                    className="w-full h-auto min-h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                                                 />
                                             ) : (
                                                 <div className="flex h-44 w-full items-center justify-center bg-gray-50">
@@ -424,8 +424,8 @@ export default function CatalogPage() {
                         </button>
 
                         {selectedProduct.imageUrl && (
-                            <div className="relative h-64 w-full overflow-hidden rounded-t-2xl">
-                                <img src={selectedProduct.imageUrl} alt={selectedProduct.name} className="h-full w-full object-cover" />
+                            <div className="relative h-64 w-full overflow-y-auto overflow-x-hidden rounded-t-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                                <img src={selectedProduct.imageUrl} alt={selectedProduct.name} className="w-full h-auto min-h-full object-cover" />
                             </div>
                         )}
 
