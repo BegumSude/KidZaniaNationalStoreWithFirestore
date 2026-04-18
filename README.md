@@ -1,4 +1,4 @@
-KidZania | National Store 🛒
+# KidZania | National Store 🛒
 Digital Transformation & Inventory Management System
 
 Bu proje, staj yaptığım KidZania İstanbul bünyesindeki National Store'un operasyonel verimliliğini artırmak amacıyla geliştirilmiş, SQL Server ➔ Python ➔ Firestore ➔ Next.js akışına sahip uçtan uca bir dijitalleşme çözümüdür. Modern bir monorepo mimarisi üzerine inşa edilmiş olup, stok takibi ve QR kod entegrasyonu sunar.
