@@ -46,7 +46,7 @@ const ScrollableImage = ({ src, alt, className }: { src: string, alt: string, cl
 
     return (
         <div className="relative w-full h-full group">
-            <div 
+            <div
                 ref={containerRef}
                 onScroll={checkScroll}
                 className="w-full h-full overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
@@ -58,7 +58,7 @@ const ScrollableImage = ({ src, alt, className }: { src: string, alt: string, cl
                     onLoad={checkScroll}
                 />
             </div>
-            
+
             {isScrollable && !isScrolledToBottom && (
                 <div className="absolute bottom-3 right-3 p-1.5 bg-black/40 backdrop-blur-sm rounded-full text-white pointer-events-none animate-bounce shadow-md transition-opacity duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
@@ -184,10 +184,10 @@ export default function ProductDynamicPage() {
                 {/* Product Image */}
                 <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-card flex items-start justify-center">
                     {product.imageUrl ? (
-                        <ScrollableImage 
-                            src={product.imageUrl} 
-                            alt={product.name} 
-                            className="w-full h-auto min-h-full object-cover transition-transform duration-700 hover:scale-105 origin-top" 
+                        <ScrollableImage
+                            src={product.imageUrl}
+                            alt={product.name}
+                            className="w-full h-auto min-h-full object-cover transition-transform duration-700 hover:scale-105 origin-top"
                         />
                     ) : (
                         <div className="flex flex-col items-center justify-center w-full h-full text-gray-300">
@@ -228,7 +228,7 @@ export default function ProductDynamicPage() {
 
                     {/* KDV Note */}
                     <div className="mt-6 pt-5 border-t border-gray-100 text-center sm:text-left">
-                        <p className="text-sm text-gray-500 font-medium italic">ℹ️ Fiyatlara KDV dahildir.</p>
+                        <p className="text-sm text-gray-500 font-medium italic"> Fiyatlara KDV dahildir.</p>
                     </div>
                 </div>
 

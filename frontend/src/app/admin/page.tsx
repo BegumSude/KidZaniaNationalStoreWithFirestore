@@ -348,14 +348,14 @@ export default function AdminDashboard() {
                                         style={{ 
                                             width: '60mm', 
                                             height: '40mm',
+                                            backgroundImage: 'url(/QRCodeLayout.png)',
+                                            backgroundSize: '100% 100%',
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundPosition: 'center',
+                                            WebkitPrintColorAdjust: 'exact',
+                                            printColorAdjust: 'exact'
                                         }}
                                     >
-                                        <img 
-                                            src="/QRCodeLayout.png" 
-                                            alt="" 
-                                            className="absolute inset-0 z-0 print:block"
-                                            style={{ width: '100%', height: '100%', objectFit: 'fill', margin: 0, padding: 0 }}
-                                        />
                                         
                                         {/* Ürün Adı */}
                                         <div className="absolute left-[4mm] right-[4mm] top-[10mm] z-10 text-left">
