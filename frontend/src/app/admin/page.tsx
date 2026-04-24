@@ -274,31 +274,110 @@ export default function AdminDashboard() {
     if (!user) return null; // router.push handles redirect in useEffect
 
     if (isPrinting) {
+        const printSelection = products.filter(p => selectedForPrint.includes(p.id));
+        const pages = [];
+        for (let i = 0; i < printSelection.length; i += 12) {
+            pages.push(printSelection.slice(i, i + 12));
+        }
+
         return (
-            <div className="bg-white min-h-screen text-black">
-                <style dangerouslySetInnerHTML={{ __html: "@page { size: A4 portrait; margin: 15mm; } body { margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; } @media print { svg, img, canvas { max-width: 100% !important; display: block; -webkit-print-color-adjust: exact; print-color-adjust: exact; } }" }} />
-                <div className="print:hidden p-4 bg-white border-b border-gray-100 flex justify-between items-center shadow-sm">
+            <div className="bg-gray-100 min-h-screen text-black print:bg-white pb-8 print:pb-0">
+                <style dangerouslySetInnerHTML={{ 
+                    __html: `
+                        @page { size: A4 portrait; margin: 0; }
+                        body { margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                        @media print {
+                            body { background-color: white !important; }
+                            .print-preview-container { background-color: white !important; padding: 0 !important; }
+                            /* Ensure page breaks work flawlessly */
+                            .print-page { page-break-after: always; break-after: page; }
+                            .print-page:last-child { page-break-after: auto; break-after: auto; }
+                        }
+                    ` 
+                }} />
+                
+                {/* Print Controls (Hidden on Print) */}
+                <div className="print:hidden sticky top-0 z-50 p-4 bg-white border-b border-gray-200 flex justify-between items-center shadow-md">
                     <div className="flex items-center gap-4">
                         <h2 className="font-bold text-lg text-gray-900">QR Kod Çıktı Önizlemesi</h2>
-                        <span className="text-sm text-gray-400">{selectedForPrint.length} etiket seçili</span>
+                        <span className="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                            {selectedForPrint.length} etiket ({pages.length} sayfa)
+                        </span>
                     </div>
                     <div className="space-x-3">
-                        <button onClick={() => setIsPrinting(false)} className="px-5 py-2 bg-gray-100 text-gray-700 rounded-xl font-semibold text-sm hover:bg-gray-200 transition-colors">İptal</button>
-                        <button onClick={() => window.print()} className="px-5 py-2 bg-[#AB0033] hover:bg-[#F18B22] text-white rounded-xl font-semibold text-sm transition-all duration-300">Sayfayı Yazdır</button>
+                        <button onClick={() => setIsPrinting(false)} className="px-5 py-2 bg-gray-100 text-gray-700 rounded-xl font-semibold text-sm hover:bg-gray-200 transition-colors">Geri Dön</button>
+                        <button onClick={() => window.print()} className="px-6 py-2 bg-[#AB0033] hover:bg-[#F18B22] text-white rounded-xl font-semibold text-sm transition-all duration-300 shadow-sm flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0v2.796c0 1.171.95 2.122 2.122 2.122h6.256c1.171 0 2.122-.95 2.122-2.122V9.456z" /></svg>
+                            Yazdır
+                        </button>
                     </div>
                 </div>
-                <div className="block p-4 print:p-0">
-                    {products.filter(p => selectedForPrint.includes(p.id)).map(product => (
-                        <div key={product.id} className="inline-flex flex-col items-center justify-start print:border-none box-border m-2 print:m-1 pt-2" style={{ width: '4cm', height: '6cm', overflow: 'hidden', pageBreakInside: 'avoid', border: '1px dashed #ccc', verticalAlign: 'top', padding: '1mm' }}>
-                            <QRCodeSVG value={`${typeof window !== 'undefined' ? window.location.origin : 'https://nationalstore.vercel.app'}/product/${product.barcode}`} style={{ width: '3cm', height: '3cm' }} fgColor="#000000" bgColor="#FFFFFF" level="H" />
-                            <div className="flex flex-col items-center w-full mt-2 gap-0.5 px-0.5">
-                                <span className="font-bold text-center text-black leading-[1.1]" style={{ fontSize: '10px' }}>{product.name}</span>
-                                <span className="text-center text-gray-500 font-bold uppercase" style={{ fontSize: '8px', letterSpacing: '0.05em' }}>Barkod: {product.barcode}</span>
-                                <div className="w-full h-px bg-gray-100 my-1" />
-                                <div className="flex flex-col items-center gap-0.5">
-                                    <span className="text-center text-gray-600 font-bold uppercase" style={{ fontSize: '7px' }}>Üretim Yeri: {product.origin || '-'}</span>
-                                    <span className="text-center text-gray-600 font-bold uppercase" style={{ fontSize: '7px' }}>Fiyat Değişimi: {formatDate(product.lastPriceChange)}</span>
-                                </div>
+
+                {/* Print Pages Container */}
+                <div className="print-preview-container py-8 print:py-0 flex flex-col items-center gap-8 print:block print:gap-0">
+                    {pages.map((pageChunk, pageIndex) => (
+                        <div 
+                            key={`page-${pageIndex}`} 
+                            className="print-page bg-white shadow-xl print:shadow-none print:m-0"
+                            style={{ 
+                                width: '210mm', 
+                                height: '297mm', 
+                                boxSizing: 'border-box'
+                            }}
+                        >
+                            <div 
+                                style={{
+                                    display: 'grid',
+                                    gridTemplateColumns: 'repeat(3, 40mm)',
+                                    gridTemplateRows: 'repeat(4, 60mm)',
+                                    paddingLeft: '30mm',
+                                    paddingRight: '30mm',
+                                    paddingTop: '12mm',
+                                    paddingBottom: '12mm',
+                                    columnGap: '15mm',
+                                    rowGap: '11mm',
+                                    boxSizing: 'border-box',
+                                    width: '100%',
+                                    height: '100%'
+                                }}
+                            >
+                                {pageChunk.map(product => (
+                                    <div 
+                                        key={product.id} 
+                                        className="relative flex flex-col justify-between items-center box-border bg-white print:border-none border border-dashed border-gray-300 overflow-hidden"
+                                        style={{ 
+                                            width: '40mm', 
+                                            height: '60mm',
+                                            padding: '2.5mm'
+                                        }}
+                                    >
+                                        <div className="w-full text-center flex-shrink-0 mt-[1mm]">
+                                            <h3 className="font-bold text-gray-900 uppercase leading-[1.15] line-clamp-2 overflow-hidden text-ellipsis" style={{ fontSize: '9px', fontFamily: 'Arial, sans-serif' }}>
+                                                {product.name}
+                                            </h3>
+                                        </div>
+                                        
+                                        <div className="flex-grow flex items-center justify-center">
+                                            <QRCodeSVG 
+                                                value={`${typeof window !== 'undefined' ? window.location.origin : 'https://nationalstore.vercel.app'}/product/${product.barcode}`} 
+                                                style={{ width: '28mm', height: '28mm' }} 
+                                                fgColor="#000000" 
+                                                bgColor="#FFFFFF" 
+                                                level="Q" 
+                                                includeMargin={false}
+                                            />
+                                        </div>
+                                        
+                                        <div className="w-full text-center flex-shrink-0 mb-[1mm]">
+                                            <div className="font-black text-gray-900 tracking-tighter leading-none" style={{ fontSize: '15px', fontFamily: 'Arial, sans-serif' }}>
+                                                {product.price.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style={{ fontFamily: 'sans-serif' }}>₺</span>
+                                            </div>
+                                            <div className="font-bold text-gray-500 tracking-widest mt-[1.5mm]" style={{ fontSize: '5px', fontFamily: 'Arial, sans-serif' }}>
+                                                KDV DAHİLDİR
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     ))}
