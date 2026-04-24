@@ -285,13 +285,68 @@ export default function AdminDashboard() {
                 <style dangerouslySetInnerHTML={{ 
                     __html: `
                         @page { size: A4 portrait; margin: 0; }
-                        body { margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                        body { margin: 0; }
                         @media print {
-                            body { background-color: white !important; }
+                            body { background-color: white !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
                             .print-preview-container { background-color: white !important; padding: 0 !important; }
-                            /* Ensure page breaks work flawlessly */
                             .print-page { page-break-after: always; break-after: page; }
                             .print-page:last-child { page-break-after: auto; break-after: auto; }
+                            .etiket-kutusu { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+                        }
+                        .etiket-kutusu {
+                            width: 6cm;
+                            height: 4cm;
+                            position: relative;
+                            background-image: url('/images/QRCodeLayout.png');
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                            background-position: center;
+                            border: 0.1px solid #eee;
+                            box-sizing: border-box;
+                            overflow: hidden;
+                            -webkit-print-color-adjust: exact;
+                            print-color-adjust: exact;
+                        }
+                        .urun-adi {
+                            position: absolute;
+                            top: 1.2cm;
+                            left: 0.5cm;
+                            right: 0.4cm;
+                            font-size: 10px;
+                            font-weight: bold;
+                            font-family: Arial, sans-serif;
+                            line-height: 1.1;
+                            overflow: hidden;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                        }
+                        .qr-kod-konum {
+                            position: absolute;
+                            top: 1.8cm;
+                            left: 0.5cm;
+                        }
+                        .fiyat-konum {
+                            position: absolute;
+                            bottom: 0.5cm;
+                            right: 0.5cm;
+                            font-size: 18px;
+                            font-weight: 900;
+                            font-family: Arial, sans-serif;
+                            color: #AB0033;
+                            text-align: right;
+                            line-height: 1;
+                        }
+                        .kdv-metni {
+                            position: absolute;
+                            bottom: 0.1cm;
+                            right: 0.5cm;
+                            font-size: 6px;
+                            font-weight: bold;
+                            font-family: Arial, sans-serif;
+                            color: #666;
+                            text-align: right;
+                            letter-spacing: 0.5px;
                         }
                     ` 
                 }} />
@@ -328,8 +383,8 @@ export default function AdminDashboard() {
                             <div 
                                 style={{
                                     display: 'grid',
-                                    gridTemplateColumns: 'repeat(3, 60mm)',
-                                    gridTemplateRows: 'repeat(7, 40mm)',
+                                    gridTemplateColumns: 'repeat(3, 6cm)',
+                                    gridTemplateRows: 'repeat(7, 4cm)',
                                     paddingLeft: '10mm',
                                     paddingRight: '10mm',
                                     paddingTop: '5mm',
@@ -342,33 +397,15 @@ export default function AdminDashboard() {
                                 }}
                             >
                                 {pageChunk.map(product => (
-                                    <div 
-                                        key={product.id} 
-                                        className="relative box-border print:border-none border border-dashed border-gray-300 overflow-hidden"
-                                        style={{ 
-                                            width: '60mm', 
-                                            height: '40mm',
-                                            backgroundImage: 'url(/QRCodeLayout.png)',
-                                            backgroundSize: '100% 100%',
-                                            backgroundRepeat: 'no-repeat',
-                                            backgroundPosition: 'center',
-                                            WebkitPrintColorAdjust: 'exact',
-                                            printColorAdjust: 'exact'
-                                        }}
-                                    >
-                                        
-                                        {/* Ürün Adı */}
-                                        <div className="absolute left-[4mm] right-[4mm] top-[10mm] z-10 text-left">
-                                            <h3 className="font-bold text-gray-900 leading-[1.1] line-clamp-2 overflow-hidden text-ellipsis" style={{ fontSize: '8.5px', fontFamily: 'Arial, sans-serif' }}>
-                                                {product.name}
-                                            </h3>
+                                    <div key={product.id} className="etiket-kutusu">
+                                        <div className="urun-adi">
+                                            {product.name}
                                         </div>
                                         
-                                        {/* QR Kod */}
-                                        <div className="absolute left-[6mm] top-1/2 -translate-y-[20%] z-10">
+                                        <div className="qr-kod-konum">
                                             <QRCodeSVG 
                                                 value={`${typeof window !== 'undefined' ? window.location.origin : 'https://nationalstore.vercel.app'}/product/${product.barcode}`} 
-                                                style={{ width: '24mm', height: '24mm' }} 
+                                                style={{ width: '2.5cm', height: '2.5cm' }} 
                                                 fgColor="#000000" 
                                                 bgColor="#FFFFFF" 
                                                 level="Q" 
@@ -376,18 +413,12 @@ export default function AdminDashboard() {
                                             />
                                         </div>
                                         
-                                        {/* Fiyat */}
-                                        <div className="absolute bottom-[6.5mm] right-[5mm] text-right z-10">
-                                            <div className="font-black text-gray-900 tracking-tight leading-none" style={{ fontSize: '18px', fontFamily: 'Arial, sans-serif' }}>
-                                                {product.price.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style={{ fontFamily: 'sans-serif' }}>₺</span>
-                                            </div>
+                                        <div className="fiyat-konum">
+                                            {product.price.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ₺
                                         </div>
 
-                                        {/* KDV Metni */}
-                                        <div className="absolute bottom-[2mm] right-[5mm] text-right z-10">
-                                            <div className="font-bold text-gray-500 tracking-widest uppercase" style={{ fontSize: '5.5px', fontFamily: 'Arial, sans-serif' }}>
-                                                KDV DAHİLDİR
-                                            </div>
+                                        <div className="kdv-metni">
+                                            KDV DAHİLDİR
                                         </div>
                                     </div>
                                 ))}
