@@ -309,13 +309,13 @@ export default function AdminDashboard() {
                         }
                         .urun-adi {
                             position: absolute;
-                            top: 1.2cm;
+                            top: 1.0cm;
                             left: 0.5cm;
                             right: 0.4cm;
-                            font-size: 10px;
+                            font-size: 8px;
                             font-weight: bold;
                             font-family: Arial, sans-serif;
-                            line-height: 1.1;
+                            line-height: 1.15;
                             overflow: hidden;
                             display: -webkit-box;
                             -webkit-line-clamp: 2;
@@ -323,14 +323,14 @@ export default function AdminDashboard() {
                         }
                         .qr-kod-konum {
                             position: absolute;
-                            top: 1.8cm;
-                            left: 0.5cm;
+                            top: 1.5cm;
+                            left: 0.8cm;
                         }
                         .fiyat-konum {
                             position: absolute;
-                            bottom: 0.5cm;
-                            right: 0.5cm;
-                            font-size: 18px;
+                            bottom: 0.6cm;
+                            right: 0.7cm;
+                            font-size: 16px;
                             font-weight: 900;
                             font-family: Arial, sans-serif;
                             color: #AB0033;
@@ -339,9 +339,9 @@ export default function AdminDashboard() {
                         }
                         .kdv-metni {
                             position: absolute;
-                            bottom: 0.1cm;
-                            right: 0.5cm;
-                            font-size: 6px;
+                            bottom: 0.15cm;
+                            right: 0.7cm;
+                            font-size: 5px;
                             font-weight: bold;
                             font-family: Arial, sans-serif;
                             color: #666;
@@ -385,12 +385,10 @@ export default function AdminDashboard() {
                                     display: 'grid',
                                     gridTemplateColumns: 'repeat(3, 6cm)',
                                     gridTemplateRows: 'repeat(6, 4cm)',
-                                    paddingLeft: '10mm',
-                                    paddingRight: '10mm',
-                                    paddingTop: '5mm',
-                                    paddingBottom: '6mm',
                                     columnGap: '5mm',
-                                    rowGap: '1mm',
+                                    rowGap: '8mm',
+                                    justifyContent: 'center',
+                                    alignContent: 'center',
                                     boxSizing: 'border-box',
                                     width: '100%',
                                     height: '100%'
@@ -405,7 +403,7 @@ export default function AdminDashboard() {
                                         <div className="qr-kod-konum">
                                             <QRCodeSVG 
                                                 value={`${typeof window !== 'undefined' ? window.location.origin : 'https://nationalstore.vercel.app'}/product/${product.barcode}`} 
-                                                style={{ width: '2.5cm', height: '2.5cm' }} 
+                                                style={{ width: '2cm', height: '2cm' }} 
                                                 fgColor="#000000" 
                                                 bgColor="#FFFFFF" 
                                                 level="Q" 
