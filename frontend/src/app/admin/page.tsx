@@ -276,8 +276,8 @@ export default function AdminDashboard() {
     if (isPrinting) {
         const printSelection = products.filter(p => selectedForPrint.includes(p.id));
         const pages = [];
-        for (let i = 0; i < printSelection.length; i += 18) {
-            pages.push(printSelection.slice(i, i + 18));
+        for (let i = 0; i < printSelection.length; i += 12) {
+            pages.push(printSelection.slice(i, i + 12));
         }
 
         return (
@@ -328,14 +328,14 @@ export default function AdminDashboard() {
                             <div 
                                 style={{
                                     display: 'grid',
-                                    gridTemplateColumns: 'repeat(3, 60mm)',
-                                    gridTemplateRows: 'repeat(6, 40mm)',
-                                    paddingLeft: '10mm',
-                                    paddingRight: '10mm',
-                                    paddingTop: '16mm',
-                                    paddingBottom: '16mm',
-                                    columnGap: '5mm',
-                                    rowGap: '5mm',
+                                    gridTemplateColumns: 'repeat(3, 40mm)',
+                                    gridTemplateRows: 'repeat(4, 60mm)',
+                                    paddingLeft: '30mm',
+                                    paddingRight: '30mm',
+                                    paddingTop: '12mm',
+                                    paddingBottom: '12mm',
+                                    columnGap: '15mm',
+                                    rowGap: '11mm',
                                     boxSizing: 'border-box',
                                     width: '100%',
                                     height: '100%'
@@ -344,11 +344,10 @@ export default function AdminDashboard() {
                                 {pageChunk.map(product => (
                                     <div 
                                         key={product.id} 
-                                        className="relative flex flex-col justify-between items-center box-border print:border-none border border-dashed border-gray-300 overflow-hidden"
+                                        className="relative box-border print:border-none border border-dashed border-gray-300 overflow-hidden"
                                         style={{ 
-                                            width: '60mm', 
-                                            height: '40mm',
-                                            padding: '2.5mm'
+                                            width: '40mm', 
+                                            height: '60mm',
                                         }}
                                     >
                                         <img 
@@ -358,16 +357,18 @@ export default function AdminDashboard() {
                                             style={{ margin: 0, padding: 0 }}
                                         />
                                         
-                                        <div className="relative z-10 w-full text-center flex-shrink-0 mt-[1mm]">
-                                            <h3 className="font-bold text-gray-900 uppercase leading-[1.1] line-clamp-2 overflow-hidden text-ellipsis" style={{ fontSize: '9px', fontFamily: 'Arial, sans-serif' }}>
+                                        {/* Ürün Adı */}
+                                        <div className="absolute left-[3mm] right-[3mm] top-[14mm] z-10 text-left">
+                                            <h3 className="font-bold text-gray-900 leading-[1.1] line-clamp-2 overflow-hidden text-ellipsis" style={{ fontSize: '8px', fontFamily: 'Arial, sans-serif' }}>
                                                 {product.name}
                                             </h3>
                                         </div>
                                         
-                                        <div className="relative z-10 flex-grow flex items-center justify-center">
+                                        {/* QR Kod */}
+                                        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[2mm] z-10">
                                             <QRCodeSVG 
                                                 value={`${typeof window !== 'undefined' ? window.location.origin : 'https://nationalstore.vercel.app'}/product/${product.barcode}`} 
-                                                style={{ width: '20mm', height: '20mm' }} 
+                                                style={{ width: '25mm', height: '25mm' }} 
                                                 fgColor="#000000" 
                                                 bgColor="#FFFFFF" 
                                                 level="Q" 
@@ -375,11 +376,16 @@ export default function AdminDashboard() {
                                             />
                                         </div>
                                         
-                                        <div className="relative z-10 w-full text-center flex-shrink-0 mb-[1mm]">
-                                            <div className="font-black text-gray-900 tracking-tight leading-none" style={{ fontSize: '14px', fontFamily: 'Arial, sans-serif' }}>
+                                        {/* Fiyat */}
+                                        <div className="absolute bottom-[6.5mm] left-0 right-0 text-center z-10">
+                                            <div className="font-bold text-gray-900 tracking-tight leading-none" style={{ fontSize: '16px', fontFamily: 'Arial, sans-serif' }}>
                                                 {product.price.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style={{ fontFamily: 'sans-serif' }}>₺</span>
                                             </div>
-                                            <div className="font-bold text-gray-500 tracking-widest mt-[0.5mm]" style={{ fontSize: '4.5px', fontFamily: 'Arial, sans-serif' }}>
+                                        </div>
+
+                                        {/* KDV Metni */}
+                                        <div className="absolute bottom-[1.5mm] left-0 right-0 text-center z-10">
+                                            <div className="font-bold text-gray-500 tracking-widest uppercase" style={{ fontSize: '6px', fontFamily: 'Arial, sans-serif' }}>
                                                 KDV DAHİLDİR
                                             </div>
                                         </div>
