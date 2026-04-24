@@ -276,8 +276,8 @@ export default function AdminDashboard() {
     if (isPrinting) {
         const printSelection = products.filter(p => selectedForPrint.includes(p.id));
         const pages = [];
-        for (let i = 0; i < printSelection.length; i += 12) {
-            pages.push(printSelection.slice(i, i + 12));
+        for (let i = 0; i < printSelection.length; i += 21) {
+            pages.push(printSelection.slice(i, i + 21));
         }
 
         return (
@@ -328,14 +328,14 @@ export default function AdminDashboard() {
                             <div 
                                 style={{
                                     display: 'grid',
-                                    gridTemplateColumns: 'repeat(3, 40mm)',
-                                    gridTemplateRows: 'repeat(4, 60mm)',
-                                    paddingLeft: '30mm',
-                                    paddingRight: '30mm',
-                                    paddingTop: '12mm',
-                                    paddingBottom: '12mm',
-                                    columnGap: '15mm',
-                                    rowGap: '11mm',
+                                    gridTemplateColumns: 'repeat(3, 60mm)',
+                                    gridTemplateRows: 'repeat(7, 40mm)',
+                                    paddingLeft: '10mm',
+                                    paddingRight: '10mm',
+                                    paddingTop: '5mm',
+                                    paddingBottom: '6mm',
+                                    columnGap: '5mm',
+                                    rowGap: '1mm',
                                     boxSizing: 'border-box',
                                     width: '100%',
                                     height: '100%'
@@ -346,29 +346,29 @@ export default function AdminDashboard() {
                                         key={product.id} 
                                         className="relative box-border print:border-none border border-dashed border-gray-300 overflow-hidden"
                                         style={{ 
-                                            width: '40mm', 
-                                            height: '60mm',
+                                            width: '60mm', 
+                                            height: '40mm',
                                         }}
                                     >
                                         <img 
                                             src="/QRCodeLayout.png" 
                                             alt="" 
-                                            className="absolute inset-0 w-full h-full object-cover z-0 print:block"
-                                            style={{ margin: 0, padding: 0 }}
+                                            className="absolute inset-0 z-0 print:block"
+                                            style={{ width: '100%', height: '100%', objectFit: 'fill', margin: 0, padding: 0 }}
                                         />
                                         
                                         {/* Ürün Adı */}
-                                        <div className="absolute left-[3mm] right-[3mm] top-[14mm] z-10 text-left">
-                                            <h3 className="font-bold text-gray-900 leading-[1.1] line-clamp-2 overflow-hidden text-ellipsis" style={{ fontSize: '8px', fontFamily: 'Arial, sans-serif' }}>
+                                        <div className="absolute left-[4mm] right-[4mm] top-[10mm] z-10 text-left">
+                                            <h3 className="font-bold text-gray-900 leading-[1.1] line-clamp-2 overflow-hidden text-ellipsis" style={{ fontSize: '8.5px', fontFamily: 'Arial, sans-serif' }}>
                                                 {product.name}
                                             </h3>
                                         </div>
                                         
                                         {/* QR Kod */}
-                                        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[2mm] z-10">
+                                        <div className="absolute left-[6mm] top-1/2 -translate-y-[20%] z-10">
                                             <QRCodeSVG 
                                                 value={`${typeof window !== 'undefined' ? window.location.origin : 'https://nationalstore.vercel.app'}/product/${product.barcode}`} 
-                                                style={{ width: '25mm', height: '25mm' }} 
+                                                style={{ width: '24mm', height: '24mm' }} 
                                                 fgColor="#000000" 
                                                 bgColor="#FFFFFF" 
                                                 level="Q" 
@@ -377,15 +377,15 @@ export default function AdminDashboard() {
                                         </div>
                                         
                                         {/* Fiyat */}
-                                        <div className="absolute bottom-[6.5mm] left-0 right-0 text-center z-10">
-                                            <div className="font-bold text-gray-900 tracking-tight leading-none" style={{ fontSize: '16px', fontFamily: 'Arial, sans-serif' }}>
+                                        <div className="absolute bottom-[6.5mm] right-[5mm] text-right z-10">
+                                            <div className="font-black text-gray-900 tracking-tight leading-none" style={{ fontSize: '18px', fontFamily: 'Arial, sans-serif' }}>
                                                 {product.price.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style={{ fontFamily: 'sans-serif' }}>₺</span>
                                             </div>
                                         </div>
 
                                         {/* KDV Metni */}
-                                        <div className="absolute bottom-[1.5mm] left-0 right-0 text-center z-10">
-                                            <div className="font-bold text-gray-500 tracking-widest uppercase" style={{ fontSize: '6px', fontFamily: 'Arial, sans-serif' }}>
+                                        <div className="absolute bottom-[2mm] right-[5mm] text-right z-10">
+                                            <div className="font-bold text-gray-500 tracking-widest uppercase" style={{ fontSize: '5.5px', fontFamily: 'Arial, sans-serif' }}>
                                                 KDV DAHİLDİR
                                             </div>
                                         </div>
