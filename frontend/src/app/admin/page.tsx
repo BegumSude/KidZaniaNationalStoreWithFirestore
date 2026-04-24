@@ -344,20 +344,27 @@ export default function AdminDashboard() {
                                 {pageChunk.map(product => (
                                     <div 
                                         key={product.id} 
-                                        className="relative flex flex-col justify-between items-center box-border bg-white print:border-none border border-dashed border-gray-300 overflow-hidden"
+                                        className="relative flex flex-col justify-between items-center box-border print:border-none border border-dashed border-gray-300 overflow-hidden"
                                         style={{ 
                                             width: '60mm', 
                                             height: '40mm',
-                                            padding: '2mm'
+                                            padding: '2.5mm'
                                         }}
                                     >
-                                        <div className="w-full text-center flex-shrink-0 mt-[1mm]">
+                                        <img 
+                                            src="/QRCodeLayout.png" 
+                                            alt="" 
+                                            className="absolute inset-0 w-full h-full object-cover z-0 print:block"
+                                            style={{ margin: 0, padding: 0 }}
+                                        />
+                                        
+                                        <div className="relative z-10 w-full text-center flex-shrink-0 mt-[1mm]">
                                             <h3 className="font-bold text-gray-900 uppercase leading-[1.1] line-clamp-2 overflow-hidden text-ellipsis" style={{ fontSize: '9px', fontFamily: 'Arial, sans-serif' }}>
                                                 {product.name}
                                             </h3>
                                         </div>
                                         
-                                        <div className="flex-grow flex items-center justify-center">
+                                        <div className="relative z-10 flex-grow flex items-center justify-center">
                                             <QRCodeSVG 
                                                 value={`${typeof window !== 'undefined' ? window.location.origin : 'https://nationalstore.vercel.app'}/product/${product.barcode}`} 
                                                 style={{ width: '20mm', height: '20mm' }} 
@@ -368,7 +375,7 @@ export default function AdminDashboard() {
                                             />
                                         </div>
                                         
-                                        <div className="w-full text-center flex-shrink-0 mb-[1mm]">
+                                        <div className="relative z-10 w-full text-center flex-shrink-0 mb-[1mm]">
                                             <div className="font-black text-gray-900 tracking-tight leading-none" style={{ fontSize: '14px', fontFamily: 'Arial, sans-serif' }}>
                                                 {product.price.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style={{ fontFamily: 'sans-serif' }}>₺</span>
                                             </div>
