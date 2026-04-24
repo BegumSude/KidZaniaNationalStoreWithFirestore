@@ -276,8 +276,8 @@ export default function AdminDashboard() {
     if (isPrinting) {
         const printSelection = products.filter(p => selectedForPrint.includes(p.id));
         const pages = [];
-        for (let i = 0; i < printSelection.length; i += 21) {
-            pages.push(printSelection.slice(i, i + 21));
+        for (let i = 0; i < printSelection.length; i += 18) {
+            pages.push(printSelection.slice(i, i + 18));
         }
 
         return (
@@ -384,7 +384,7 @@ export default function AdminDashboard() {
                                 style={{
                                     display: 'grid',
                                     gridTemplateColumns: 'repeat(3, 6cm)',
-                                    gridTemplateRows: 'repeat(7, 4cm)',
+                                    gridTemplateRows: 'repeat(6, 4cm)',
                                     paddingLeft: '10mm',
                                     paddingRight: '10mm',
                                     paddingTop: '5mm',
