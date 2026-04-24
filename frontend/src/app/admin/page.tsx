@@ -276,8 +276,8 @@ export default function AdminDashboard() {
     if (isPrinting) {
         const printSelection = products.filter(p => selectedForPrint.includes(p.id));
         const pages = [];
-        for (let i = 0; i < printSelection.length; i += 12) {
-            pages.push(printSelection.slice(i, i + 12));
+        for (let i = 0; i < printSelection.length; i += 18) {
+            pages.push(printSelection.slice(i, i + 18));
         }
 
         return (
@@ -328,14 +328,14 @@ export default function AdminDashboard() {
                             <div 
                                 style={{
                                     display: 'grid',
-                                    gridTemplateColumns: 'repeat(3, 40mm)',
-                                    gridTemplateRows: 'repeat(4, 60mm)',
-                                    paddingLeft: '30mm',
-                                    paddingRight: '30mm',
-                                    paddingTop: '12mm',
-                                    paddingBottom: '12mm',
-                                    columnGap: '15mm',
-                                    rowGap: '11mm',
+                                    gridTemplateColumns: 'repeat(3, 60mm)',
+                                    gridTemplateRows: 'repeat(6, 40mm)',
+                                    paddingLeft: '10mm',
+                                    paddingRight: '10mm',
+                                    paddingTop: '16mm',
+                                    paddingBottom: '16mm',
+                                    columnGap: '5mm',
+                                    rowGap: '5mm',
                                     boxSizing: 'border-box',
                                     width: '100%',
                                     height: '100%'
@@ -346,13 +346,13 @@ export default function AdminDashboard() {
                                         key={product.id} 
                                         className="relative flex flex-col justify-between items-center box-border bg-white print:border-none border border-dashed border-gray-300 overflow-hidden"
                                         style={{ 
-                                            width: '40mm', 
-                                            height: '60mm',
-                                            padding: '2.5mm'
+                                            width: '60mm', 
+                                            height: '40mm',
+                                            padding: '2mm'
                                         }}
                                     >
                                         <div className="w-full text-center flex-shrink-0 mt-[1mm]">
-                                            <h3 className="font-bold text-gray-900 uppercase leading-[1.15] line-clamp-2 overflow-hidden text-ellipsis" style={{ fontSize: '9px', fontFamily: 'Arial, sans-serif' }}>
+                                            <h3 className="font-bold text-gray-900 uppercase leading-[1.1] line-clamp-2 overflow-hidden text-ellipsis" style={{ fontSize: '9px', fontFamily: 'Arial, sans-serif' }}>
                                                 {product.name}
                                             </h3>
                                         </div>
@@ -360,7 +360,7 @@ export default function AdminDashboard() {
                                         <div className="flex-grow flex items-center justify-center">
                                             <QRCodeSVG 
                                                 value={`${typeof window !== 'undefined' ? window.location.origin : 'https://nationalstore.vercel.app'}/product/${product.barcode}`} 
-                                                style={{ width: '28mm', height: '28mm' }} 
+                                                style={{ width: '20mm', height: '20mm' }} 
                                                 fgColor="#000000" 
                                                 bgColor="#FFFFFF" 
                                                 level="Q" 
@@ -369,10 +369,10 @@ export default function AdminDashboard() {
                                         </div>
                                         
                                         <div className="w-full text-center flex-shrink-0 mb-[1mm]">
-                                            <div className="font-black text-gray-900 tracking-tighter leading-none" style={{ fontSize: '15px', fontFamily: 'Arial, sans-serif' }}>
+                                            <div className="font-black text-gray-900 tracking-tight leading-none" style={{ fontSize: '14px', fontFamily: 'Arial, sans-serif' }}>
                                                 {product.price.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style={{ fontFamily: 'sans-serif' }}>₺</span>
                                             </div>
-                                            <div className="font-bold text-gray-500 tracking-widest mt-[1.5mm]" style={{ fontSize: '5px', fontFamily: 'Arial, sans-serif' }}>
+                                            <div className="font-bold text-gray-500 tracking-widest mt-[0.5mm]" style={{ fontSize: '4.5px', fontFamily: 'Arial, sans-serif' }}>
                                                 KDV DAHİLDİR
                                             </div>
                                         </div>
